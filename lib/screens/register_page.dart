@@ -1,39 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:k/constants.dart';
 import 'package:k/widgets/custom_text_filed.dart';
 
 class registerPage extends StatelessWidget {
   const registerPage({super.key});
 
+  static String id = 'registerPage';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
+      backgroundColor: kPrimaryColor,
+      body: ListView(
         children: [
-          Spacer(
-            flex: 2,
-          ),
-          Center(
-            child: Column(
-              children: [
-                Image.asset(
-                  'assets/images/scholar.png',
-                  scale: 0.6,
-                ),
-                Text(
-                  'Scholar Chat',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      wordSpacing: 4,
-                      fontSize: 30),
-                )
-              ],
+          Padding(
+            padding: const EdgeInsets.only(bottom: 60, top: 100),
+            child: Center(
+              child: Column(
+                children: [
+                  Image.asset(
+                    'assets/images/scholar.png',
+                    scale: 0.6,
+                  ),
+                  Text(
+                    'Scholar Chat',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        wordSpacing: 4,
+                        fontSize: 30),
+                  )
+                ],
+              ),
             ),
           ),
-          Spacer(),
           Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 5),
             child: Column(
@@ -75,9 +74,9 @@ class registerPage extends StatelessWidget {
               ],
             ),
           ),
-          Spacer(),
           Padding(
-            padding: const EdgeInsets.only(left: 10, right: 5),
+            padding:
+                const EdgeInsets.only(top: 25.0, left: 10, right: 5, bottom: 5),
             child: Container(
               height: 50,
               decoration: BoxDecoration(

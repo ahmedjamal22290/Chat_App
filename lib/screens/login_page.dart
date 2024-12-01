@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:k/constants.dart';
 import 'package:k/screens/register_page.dart';
 import 'package:k/widgets/custom_text_filed.dart';
 
 class loginPage extends StatelessWidget {
   const loginPage({super.key});
 
+  static String id = 'logInPage';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
+      backgroundColor: kPrimaryColor,
+      body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 105.0, top: 125),
+            padding: const EdgeInsets.only(bottom: 80, top: 100),
             child: Center(
               child: Column(
                 children: [
@@ -91,7 +91,7 @@ class loginPage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, 'registerPage');
+                  Navigator.pushNamed(context, registerPage.id);
                 },
                 child: Text(
                   "Register",
