@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:k/screens/register_page.dart';
 import 'package:k/widgets/custom_text_filed.dart';
 
-class loginPage extends StatelessWidget {
-  const loginPage({super.key});
+class registerPage extends StatelessWidget {
+  const registerPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,27 +12,28 @@ class loginPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 105.0, top: 125),
-            child: Center(
-              child: Column(
-                children: [
-                  Image.asset(
-                    'assets/images/scholar.png',
-                    scale: 0.6,
-                  ),
-                  Text(
-                    'Scholar Chat',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        wordSpacing: 4,
-                        fontSize: 30),
-                  )
-                ],
-              ),
+          Spacer(
+            flex: 2,
+          ),
+          Center(
+            child: Column(
+              children: [
+                Image.asset(
+                  'assets/images/scholar.png',
+                  scale: 0.6,
+                ),
+                Text(
+                  'Scholar Chat',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      wordSpacing: 4,
+                      fontSize: 30),
+                )
+              ],
             ),
           ),
+          Spacer(),
           Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 5),
             child: Column(
@@ -43,13 +43,25 @@ class loginPage extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(bottom: 15.0),
                   child: Text(
-                    'Sign In',
+                    'Register',
                     style: TextStyle(
                       color: Colors.white,
                       // fontWeight: FontWeight.bold,
                       fontSize: 25,
                     ),
                   ),
+                ),
+                customTextField(
+                  labelText: 'First Name',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                customTextField(
+                  labelText: 'Last Name',
+                ),
+                const SizedBox(
+                  height: 15,
                 ),
                 customTextField(
                   labelText: 'Email',
@@ -63,9 +75,9 @@ class loginPage extends StatelessWidget {
               ],
             ),
           ),
+          Spacer(),
           Padding(
-            padding:
-                const EdgeInsets.only(top: 25.0, left: 10, right: 5, bottom: 5),
+            padding: const EdgeInsets.only(left: 10, right: 5),
             child: Container(
               height: 50,
               decoration: BoxDecoration(
@@ -74,7 +86,7 @@ class loginPage extends StatelessWidget {
               ),
               child: Center(
                   child: Text(
-                'Sign In',
+                'Register',
                 style: TextStyle(
                   fontSize: 25,
                   fontFamily: 'Pacifico',
@@ -86,18 +98,15 @@ class loginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                "don't have an account ? ",
+                "Already have an account ? ",
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (BuildContext) {
-                    return registerPage();
-                  }));
+                  Navigator.pop(context);
                 },
                 child: Text(
-                  "Register",
+                  "Sign In",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.amberAccent,
@@ -105,7 +114,10 @@ class loginPage extends StatelessWidget {
                 ),
               ),
             ],
-          )
+          ),
+          Spacer(
+            flex: 2,
+          ),
         ],
       ),
     );
