@@ -8,10 +8,14 @@ void main() {
 class scholarChat extends StatelessWidget {
   const scholarChat({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        'logInPage': (cotext) {
+          return loginPage();
+        },
+      },
       debugShowCheckedModeBanner: false,
       home: loginPage(),
     );
