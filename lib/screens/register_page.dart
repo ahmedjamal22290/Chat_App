@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
+import 'package:k/widgets/custom_botton.dart';
 import 'package:k/widgets/custom_text_filed.dart';
 
 class registerPage extends StatelessWidget {
@@ -74,24 +77,9 @@ class registerPage extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding:
-                const EdgeInsets.only(top: 25.0, left: 10, right: 5, bottom: 5),
-            child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                  child: Text(
-                'Register',
-                style: TextStyle(
-                  fontSize: 25,
-                  fontFamily: 'Pacifico',
-                ),
-              )),
-            ),
+          customBotton(
+            onTap: () {},
+            title: 'Register',
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -107,15 +95,13 @@ class registerPage extends StatelessWidget {
                 child: Text(
                   "Sign In",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amberAccent,
-                      fontSize: 16),
+                    fontWeight: FontWeight.bold,
+                    color: Colors.amberAccent,
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ],
-          ),
-          Spacer(
-            flex: 2,
           ),
         ],
       ),
