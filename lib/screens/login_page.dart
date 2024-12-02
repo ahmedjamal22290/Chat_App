@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
 import 'package:k/screens/register_page.dart';
@@ -5,8 +8,9 @@ import 'package:k/widgets/custom_botton.dart';
 import 'package:k/widgets/custom_text_filed.dart';
 
 class loginPage extends StatelessWidget {
-  const loginPage({super.key});
-
+  loginPage({super.key});
+  bool validtion = true;
+  String? email, password;
   static String id = 'logInPage';
   @override
   Widget build(BuildContext context) {
@@ -53,18 +57,29 @@ class loginPage extends StatelessWidget {
                   ),
                 ),
                 customTextField(
+                  validtion: validtion,
+                  onChanged: (value) {
+                    email = value;
+                  },
                   labelText: 'Email',
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 customTextField(
+                  validtion: validtion,
+                  onChanged: (value) {
+                    password = value;
+                  },
                   labelText: 'Password',
                 ),
               ],
             ),
           ),
-          customBotton(onTap: () {}, title: 'Sign In'),
+          customBotton(
+            onTap: () {},
+            title: 'Sign In',
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

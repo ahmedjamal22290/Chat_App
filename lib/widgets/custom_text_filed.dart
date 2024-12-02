@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
 
 class customTextField extends StatelessWidget {
-  customTextField({super.key, required this.labelText});
-  String? labelText;
+  customTextField(
+      {super.key,
+      this.errorText,
+      required this.validtion,
+      required this.onChanged,
+      required this.labelText});
+  String? labelText, errorText;
+  Function(String) onChanged;
+  bool validtion;
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onChanged: onChanged,
       decoration: InputDecoration(
+        errorText: validtion ? null : errorText,
+        errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: const BorderSide(
+              color: Color(0xFFFF0000),
+              width: 1.5,
+            )),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: const BorderSide(

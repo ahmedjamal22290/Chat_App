@@ -1,14 +1,25 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
 import 'package:k/widgets/custom_botton.dart';
 import 'package:k/widgets/custom_text_filed.dart';
 
-class registerPage extends StatelessWidget {
-  const registerPage({super.key});
-
+class registerPage extends StatefulWidget {
+  registerPage({super.key});
   static String id = 'registerPage';
+
+  @override
+  State<registerPage> createState() => _registerPageState();
+}
+
+class _registerPageState extends State<registerPage> {
+  bool validtionEmail = true, validtionPass = true, validtion = true;
+
+  String? email, password, firstName, lastName, errorPass, errorEmail;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,31 +65,92 @@ class registerPage extends StatelessWidget {
                   ),
                 ),
                 customTextField(
+                  errorText: "Error in Name",
+                  validtion: validtion,
+                  onChanged: (Value) {
+                    firstName = Value;
+                  },
                   labelText: 'First Name',
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 customTextField(
+                  validtion: validtion,
+                  errorText: "Error in Name",
+                  onChanged: (Value) {
+                    lastName = Value;
+                  },
                   labelText: 'Last Name',
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 customTextField(
+                  validtion: validtionEmail,
+                  onChanged: (value) {
+                    email = value;
+                  },
                   labelText: 'Email',
+                  errorText: errorEmail,
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 customTextField(
+                  validtion: validtionPass,
+                  onChanged: (value) {
+                    password = value;
+                  },
+                  errorText: errorPass,
                   labelText: 'Password',
                 ),
               ],
             ),
           ),
           customBotton(
-            onTap: () {},
+            onTap: () async {
+              if (firstName == null ||
+                  lastName == null ||
+                  firstName == "" ||
+                  lastName == "") {
+                setState(() {
+                  validtion = false;
+                });
+              } else {
+                try {
+                  FirebaseAuth auth = FirebaseAuth.instance;
+                  UserCredential userCredential =
+                      await auth.createUserWithEmailAndPassword(
+                          email: email!, password: password!);
+                  log(userCredential.user!.displayName ?? "null");
+                  setState(() {
+                    validtion = true;
+                    validtionEmail = true;
+                    validtionPass = true;
+                    errorEmail = null;
+                    errorPass = null;
+                  });
+                } on FirebaseAuthException catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(e.message!),
+                    ),
+                  );
+                  setState(() {
+                    if (e.code == "email-already-in-use" ||
+                        e.message == "invalid-email") {
+                      validtionEmail = false;
+                      errorEmail = e.message;
+                    }
+                    if (e.code == "weak-password") {
+                      validtionPass = false;
+                      errorPass = e.message;
+                    }
+                  });
+                }
+              }
+            },
             title: 'Register',
           ),
           Row(
