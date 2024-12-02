@@ -9,17 +9,17 @@ class customTextField extends StatelessWidget {
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: const Color(0xFF1E3D73),
               width: 1.5,
             )),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(
           color: Colors.white,
           width: 1.5,
         )),
         labelText: labelText,
-        labelStyle: TextStyle(
+        labelStyle: const TextStyle(
           color: Colors.white,
           fontSize: 17,
         ),
