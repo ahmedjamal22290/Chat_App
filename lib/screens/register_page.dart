@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
 import 'package:k/widgets/custom_botton.dart';
@@ -21,8 +18,10 @@ class _registerPageState extends State<registerPage> {
 
   String? email, password, firstName, lastName, errorPass, errorEmail;
   GlobalKey<FormState> fromKey = GlobalKey();
-  @override
+
   bool isLoading = false;
+
+  @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
       inAsyncCall: isLoading,
@@ -135,22 +134,26 @@ class _registerPageState extends State<registerPage> {
                   "Already have an account ? ",
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    "Sign In",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amberAccent,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
+                navigatToLoginPage(context),
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  GestureDetector navigatToLoginPage(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: const Text(
+        "Sign In",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.amberAccent,
+          fontSize: 16,
         ),
       ),
     );
