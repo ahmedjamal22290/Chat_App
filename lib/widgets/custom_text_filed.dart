@@ -4,18 +4,18 @@ class customTextField extends StatelessWidget {
   customTextField(
       {super.key,
       this.errorText,
-      required this.validtion,
+      this.validtion,
       required this.onChanged,
       required this.labelText});
   String? labelText, errorText;
   Function(String) onChanged;
-  bool validtion;
+  bool? validtion;
   @override
   Widget build(BuildContext context) {
     return TextField(
       onChanged: onChanged,
       decoration: InputDecoration(
-        errorText: validtion ? null : errorText,
+        errorText: validtion ?? true ? null : errorText,
         errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: const BorderSide(
