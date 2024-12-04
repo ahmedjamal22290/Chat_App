@@ -19,7 +19,7 @@ class _registerPageState extends State<registerPage> {
   bool validtionEmail = true, validtionPass = true, validtion = true;
 
   String? email, password, firstName, lastName, errorPass, errorEmail;
-
+  GlobalKey<FormState> fromKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,101 +49,72 @@ class _registerPageState extends State<registerPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 5),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 15.0),
-                  child: Text(
-                    'Register',
-                    style: TextStyle(
-                      color: Colors.white,
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 25,
+            child: Form(
+              key: fromKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 15.0),
+                    child: Text(
+                      'Register',
+                      style: TextStyle(
+                        color: Colors.white,
+                        // fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
-                ),
-                customTextField(
-                  errorText: "Error in Name",
-                  validtion: validtion,
-                  onChanged: (Value) {
-                    firstName = Value;
-                  },
-                  labelText: 'First Name',
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                customTextField(
-                  validtion: validtion,
-                  errorText: "Error in Name",
-                  onChanged: (Value) {
-                    lastName = Value;
-                  },
-                  labelText: 'Last Name',
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                customTextField(
-                  validtion: validtionEmail,
-                  onChanged: (value) {
-                    email = value;
-                  },
-                  labelText: 'Email',
-                  errorText: errorEmail,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                customTextField(
-                  validtion: validtionPass,
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  errorText: errorPass,
-                  labelText: 'Password',
-                ),
-              ],
+                  customTextField(
+                    onChanged: (Value) {
+                      firstName = Value;
+                    },
+                    labelText: 'First Name',
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  customTextField(
+                    onChanged: (Value) {
+                      lastName = Value;
+                    },
+                    labelText: 'Last Name',
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  customTextField(
+                    onChanged: (value) {
+                      email = value;
+                    },
+                    labelText: 'Email',
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  customTextField(
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    labelText: 'Password',
+                  ),
+                ],
+              ),
             ),
           ),
           customBotton(
             onTap: () async {
-              if (firstName == null ||
-                  lastName == null ||
-                  firstName == "" ||
-                  lastName == "") {
-                showSnackMessage(context, 'you to have fill the names field');
-                setState(() {
-                  validtion = false;
-                });
-              } else {
+              if (fromKey.currentState!.validate()) {
                 try {
                   await createUser();
                   showSnackMessage(context, 'success');
-                  setState(() {
-                    validtion = true;
-                    validtionEmail = true;
-                    validtionPass = true;
-                    errorEmail = null;
-                    errorPass = null;
-                  });
                 } on FirebaseAuthException catch (e) {
                   showSnackMessage(context, e.code);
-                  setState(() {
-                    if (e.code == "email-already-in-use" ||
-                        e.message == "invalid-email") {
-                      validtionEmail = false;
-                      errorEmail = e.message;
-                    }
-                    if (e.code == "weak-password") {
-                      validtionPass = false;
-                      errorPass = e.message;
-                    }
-                  });
+                } catch (ex) {
+                  showSnackMessage(context, 'There was an error');
                 }
-              }
+              } else {}
             },
             title: 'Register',
           ),
