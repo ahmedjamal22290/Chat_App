@@ -12,6 +12,8 @@ class loginPage extends StatelessWidget {
   bool validtion = true;
   String? email, password;
   static String id = 'logInPage';
+
+  GlobalKey<FormState> formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,58 +43,67 @@ class loginPage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 5),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 15.0),
-                  child: Text(
-                    'Sign In',
-                    style: TextStyle(
-                      color: Colors.white,
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 25,
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 15.0),
+                    child: Text(
+                      'Sign In',
+                      style: TextStyle(
+                        color: Colors.white,
+                        // fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
-                ),
-                customTextField(
-                  validtion: validtion,
-                  onChanged: (value) {
-                    email = value;
-                  },
-                  labelText: 'Email',
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                customTextField(
-                  validtion: validtion,
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  labelText: 'Password',
-                ),
-              ],
+                  customTextField(
+                    onChanged: (value) {
+                      email = value;
+                    },
+                    labelText: 'Email',
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  customTextField(
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    labelText: 'Password',
+                  ),
+                ],
+              ),
             ),
           ),
           customBotton(
             onTap: () async {
-              try {
-                FirebaseAuth auth = FirebaseAuth.instance;
-                UserCredential user = await auth.signInWithEmailAndPassword(
-                    email: email ?? "empty", password: password ?? "empty");
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Success'),
-                  ),
-                );
-              } on FirebaseAuthException catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(e.code),
-                  ),
-                );
+              if (formKey.currentState!.validate()) {
+                try {
+                  FirebaseAuth auth = FirebaseAuth.instance;
+                  UserCredential user = await auth.signInWithEmailAndPassword(
+                      email: email ?? "empty", password: password ?? "empty");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Success'),
+                    ),
+                  );
+                } on FirebaseAuthException catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(e.code),
+                    ),
+                  );
+                } catch (ex) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('There was an Error'),
+                    ),
+                  );
+                }
               }
             },
             title: 'Sign In',

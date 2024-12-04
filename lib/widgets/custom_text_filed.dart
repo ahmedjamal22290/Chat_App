@@ -12,10 +12,17 @@ class customTextField extends StatelessWidget {
   bool? validtion;
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: (data) {
+        if (data == null || data.isEmpty) {
+          return "field is empty";
+        }
+      },
       onChanged: onChanged,
       decoration: InputDecoration(
-        errorText: validtion ?? true ? null : errorText,
+        errorStyle: TextStyle(
+            color: const Color.fromARGB(255, 156, 11, 0),
+            fontWeight: FontWeight.bold),
         errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: const BorderSide(
