@@ -114,16 +114,14 @@ class _registerPageState extends State<registerPage> {
                   lastName == null ||
                   firstName == "" ||
                   lastName == "") {
+                showSnackMessage(context, 'you to have fill the names field');
                 setState(() {
                   validtion = false;
                 });
               } else {
                 try {
-                  FirebaseAuth auth = FirebaseAuth.instance;
-                  UserCredential userCredential =
-                      await auth.createUserWithEmailAndPassword(
-                          email: email!, password: password!);
-                  log(userCredential.user!.displayName ?? "null");
+                  await createUser();
+                  showSnackMessage(context, 'success');
                   setState(() {
                     validtion = true;
                     validtionEmail = true;
@@ -132,11 +130,7 @@ class _registerPageState extends State<registerPage> {
                     errorPass = null;
                   });
                 } on FirebaseAuthException catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(e.message!),
-                    ),
-                  );
+                  showSnackMessage(context, e.code);
                   setState(() {
                     if (e.code == "email-already-in-use" ||
                         e.message == "invalid-email") {
@@ -178,5 +172,19 @@ class _registerPageState extends State<registerPage> {
         ],
       ),
     );
+  }
+
+  void showSnackMessage(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
+  Future<void> createUser() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: email!, password: password!);
   }
 }

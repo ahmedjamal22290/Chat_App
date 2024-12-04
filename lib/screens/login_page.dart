@@ -77,7 +77,24 @@ class loginPage extends StatelessWidget {
             ),
           ),
           customBotton(
-            onTap: () {},
+            onTap: () async {
+              try {
+                FirebaseAuth auth = FirebaseAuth.instance;
+                UserCredential user = await auth.signInWithEmailAndPassword(
+                    email: email ?? "empty", password: password ?? "empty");
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Success'),
+                  ),
+                );
+              } on FirebaseAuthException catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(e.code),
+                  ),
+                );
+              }
+            },
             title: 'Sign In',
           ),
           Row(
