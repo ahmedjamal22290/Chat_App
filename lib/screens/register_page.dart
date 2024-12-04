@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
+import 'package:k/helper/show_snack_message.dart';
 import 'package:k/widgets/custom_botton.dart';
 import 'package:k/widgets/custom_text_filed.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -69,7 +70,7 @@ class _registerPageState extends State<registerPage> {
                         ),
                       ),
                     ),
-                    customTextField(
+                    customTextFromField(
                       onChanged: (Value) {
                         firstName = Value;
                       },
@@ -78,7 +79,7 @@ class _registerPageState extends State<registerPage> {
                     const SizedBox(
                       height: 15,
                     ),
-                    customTextField(
+                    customTextFromField(
                       onChanged: (Value) {
                         lastName = Value;
                       },
@@ -87,7 +88,7 @@ class _registerPageState extends State<registerPage> {
                     const SizedBox(
                       height: 15,
                     ),
-                    customTextField(
+                    customTextFromField(
                       onChanged: (value) {
                         email = value;
                       },
@@ -96,7 +97,7 @@ class _registerPageState extends State<registerPage> {
                     const SizedBox(
                       height: 15,
                     ),
-                    customTextField(
+                    customTextFromField(
                       onChanged: (value) {
                         password = value;
                       },
@@ -155,14 +156,6 @@ class _registerPageState extends State<registerPage> {
           color: Colors.amberAccent,
           fontSize: 16,
         ),
-      ),
-    );
-  }
-
-  void showSnackMessage(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
       ),
     );
   }

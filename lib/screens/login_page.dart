@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
+import 'package:k/helper/show_snack_message.dart';
 import 'package:k/screens/register_page.dart';
 import 'package:k/widgets/custom_botton.dart';
 import 'package:k/widgets/custom_text_filed.dart';
@@ -70,7 +71,7 @@ class _loginPageState extends State<loginPage> {
                         ),
                       ),
                     ),
-                    customTextField(
+                    customTextFromField(
                       onChanged: (value) {
                         email = value;
                       },
@@ -79,7 +80,7 @@ class _loginPageState extends State<loginPage> {
                     const SizedBox(
                       height: 15,
                     ),
-                    customTextField(
+                    customTextFromField(
                       onChanged: (value) {
                         password = value;
                       },
@@ -137,14 +138,6 @@ class _loginPageState extends State<loginPage> {
             fontWeight: FontWeight.bold,
             color: Colors.amberAccent,
             fontSize: 16),
-      ),
-    );
-  }
-
-  void showSnackMessage(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class customTextField extends StatelessWidget {
-  customTextField(
+class customTextFromField extends StatelessWidget {
+  customTextFromField(
       {super.key, required this.onChanged, required this.labelText});
   String? labelText;
   Function(String) onChanged;
