@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
@@ -23,9 +21,8 @@ class _loginPageState extends State<loginPage> {
 
   GlobalKey<FormState> formKey = GlobalKey();
 
-  @override
   bool isLoading = false;
-
+  @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
       inAsyncCall: isLoading,
@@ -99,26 +96,12 @@ class _loginPageState extends State<loginPage> {
                     isLoading = true;
                   });
                   try {
-                    FirebaseAuth auth = FirebaseAuth.instance;
-                    UserCredential user = await auth.signInWithEmailAndPassword(
-                        email: email ?? "empty", password: password ?? "empty");
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Success'),
-                      ),
-                    );
+                    await loginUser();
+                    showSnackMessage(context, 'Success');
                   } on FirebaseAuthException catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(e.code),
-                      ),
-                    );
+                    showSnackMessage(context, e.code);
                   } catch (ex) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('There was an Error'),
-                      ),
-                    );
+                    showSnackMessage(context, 'There was an Error');
                   }
                   setState(() {
                     isLoading = false;
@@ -134,23 +117,41 @@ class _loginPageState extends State<loginPage> {
                   "don't have an account ? ",
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, registerPage.id);
-                  },
-                  child: Text(
-                    "Register",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.amberAccent,
-                        fontSize: 16),
-                  ),
-                ),
+                navigatToRegisterPage(context),
               ],
             )
           ],
         ),
       ),
     );
+  }
+
+  GestureDetector navigatToRegisterPage(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, registerPage.id);
+      },
+      child: const Text(
+        "Register",
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.amberAccent,
+            fontSize: 16),
+      ),
+    );
+  }
+
+  void showSnackMessage(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
+  Future<void> loginUser() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    UserCredential user = await auth.signInWithEmailAndPassword(
+        email: email ?? "empty", password: password ?? "empty");
   }
 }
