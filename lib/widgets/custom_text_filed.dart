@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 
 class customTextField extends StatelessWidget {
   customTextField(
-      {super.key,
-      this.errorText,
-      this.validtion,
-      required this.onChanged,
-      required this.labelText});
-  String? labelText, errorText;
+      {super.key, required this.onChanged, required this.labelText});
+  String? labelText;
   Function(String) onChanged;
-  bool? validtion;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
