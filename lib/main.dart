@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:k/firebase_options.dart';
+import 'package:k/screens/chat_page.dart';
 import 'package:k/screens/login_page.dart';
 import 'package:k/screens/register_page.dart';
 
@@ -22,7 +23,8 @@ class scholarChat extends StatelessWidget {
         loginPage.id: (cotext) {
           return loginPage();
         },
-        registerPage.id: (context) => registerPage()
+        registerPage.id: (context) => registerPage(),
+        chatPage.id: (context) => chatPage(),
       },
       debugShowCheckedModeBanner: false,
       initialRoute: 'logInPage',

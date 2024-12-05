@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
 import 'package:k/helper/show_snack_message.dart';
+import 'package:k/screens/chat_page.dart';
 import 'package:k/screens/register_page.dart';
 import 'package:k/widgets/custom_botton.dart';
 import 'package:k/widgets/custom_text_filed.dart';
@@ -99,6 +100,7 @@ class _loginPageState extends State<loginPage> {
                   try {
                     await loginUser();
                     showSnackMessage(context, 'Success');
+                    Navigator.pushNamed(context, chatPage.id);
                   } on FirebaseAuthException catch (e) {
                     showSnackMessage(context, e.code);
                   } catch (ex) {
