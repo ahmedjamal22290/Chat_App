@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
 
 class chatPage extends StatelessWidget {
-  const chatPage({super.key});
   static String id = 'chatPage';
   Widget build(BuildContext context) {
     return Scaffold(
