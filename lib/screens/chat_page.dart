@@ -7,23 +7,25 @@ class chatPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        actions: [
-          Spacer(),
-          Image(
-            image: AssetImage('assets/images/scholar.png'),
-            height: 60,
-          ),
-          Text(
-            'Chat',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-              fontFamily: 'pacifico',
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(
+              image: AssetImage('assets/images/scholar.png'),
+              height: 60,
             ),
-          ),
-          Spacer(),
-        ],
+            Text(
+              'Chat',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+                fontFamily: 'pacifico',
+              ),
+            ),
+          ],
+        ),
         backgroundColor: kPrimaryColor,
       ),
       bottomNavigationBar: Text(
