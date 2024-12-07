@@ -41,19 +41,28 @@ class chatPage extends StatelessWidget {
               },
             ),
           ),
-          TextField(
-            decoration: InputDecoration(
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(22),
-                  borderSide: BorderSide(
-                    width: 2,
-                    color: Colors.black,
-                  )),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                width: 2,
-                color: Colors.black,
-              )),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: TextField(
+              decoration: InputDecoration(
+                suffixIcon: Icon(
+                  Icons.send,
+                  color: Colors.amber,
+                ),
+                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(22),
+                    borderSide: BorderSide(
+                      width: 2,
+                      color: const Color(0xFF0B6960),
+                    )),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(
+                      width: 2,
+                      color: Colors.black,
+                    )),
+              ),
             ),
           ),
         ],
