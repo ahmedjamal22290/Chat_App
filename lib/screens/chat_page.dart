@@ -8,7 +8,7 @@ import 'package:k/widgets/message_box.dart';
 class chatPage extends StatelessWidget {
   static String id = 'chatPage';
   CollectionReference message =
-      FirebaseFirestore.instance.collection('messages');
+      FirebaseFirestore.instance.collection(kMessagesCollection);
   TextEditingController _controller = TextEditingController();
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,10 +57,16 @@ class chatPage extends StatelessWidget {
               },
               decoration: InputDecoration(
                 hintText: 'Send Message',
-                suffixIcon: Icon(
-                  size: 30,
-                  Icons.send,
-                  color: const Color(0xFF0B6960),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    log(_controller.text);
+                    _controller.clear();
+                  },
+                  child: Icon(
+                    size: 30,
+                    Icons.send,
+                    color: const Color(0xFF0B6960),
+                  ),
                 ),
                 border: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(

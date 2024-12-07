@@ -18,7 +18,7 @@ class messageBoxUser2 extends StatelessWidget {
               topRight: Radius.circular(12),
               bottomLeft: Radius.circular(12),
               topLeft: Radius.circular(12)),
-          color: KChatSecondColor,
+          color: kChatSecondColor,
         ),
         child: Center(
           child: Text(
@@ -49,7 +49,7 @@ class messageBoxUser1 extends StatelessWidget {
               topRight: Radius.circular(12),
               bottomRight: Radius.circular(12),
               topLeft: Radius.circular(12)),
-          color: KChatFirstColor,
+          color: kChatFirstColor,
         ),
         child: Center(
           child: Text(
