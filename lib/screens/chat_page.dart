@@ -59,7 +59,7 @@ class chatPage extends StatelessWidget {
                 hintText: 'Send Message',
                 suffixIcon: GestureDetector(
                   onTap: () {
-                    log(_controller.text);
+                    addMessage(_controller.text);
                     _controller.clear();
                   },
                   child: Icon(
