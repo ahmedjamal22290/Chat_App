@@ -9,6 +9,7 @@ class chatPage extends StatelessWidget {
   static String id = 'chatPage';
   CollectionReference message =
       FirebaseFirestore.instance.collection('messages');
+  TextEditingController _controller = TextEditingController();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -49,8 +50,10 @@ class chatPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: TextField(
+              controller: _controller,
               onSubmitted: (value) {
                 addMessage(value);
+                _controller.clear();
               },
               decoration: InputDecoration(
                 hintText: 'Send Message',
