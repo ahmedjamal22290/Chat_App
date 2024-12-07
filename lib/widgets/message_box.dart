@@ -11,7 +11,7 @@ class messageBoxUser2 extends StatelessWidget {
         minHeight: 70,
       ),
       child: Container(
-        margin: EdgeInsets.only(left: 30, right: 2, bottom: 10),
+        margin: EdgeInsets.only(left: 30, right: 2, bottom: 5, top: 10),
         padding: EdgeInsets.only(left: 6),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -42,7 +42,7 @@ class messageBoxUser1 extends StatelessWidget {
         minHeight: 70,
       ),
       child: Container(
-        margin: EdgeInsets.only(right: 30, left: 2, bottom: 10),
+        margin: EdgeInsets.only(right: 30, left: 2, bottom: 5, top: 10),
         padding: EdgeInsets.only(left: 6),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(

@@ -29,16 +29,34 @@ class chatPage extends StatelessWidget {
         ),
         backgroundColor: kPrimaryColor,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10.0),
-        child: ListView.builder(
-          itemCount: 20,
-          itemBuilder: (context, index) {
-            return index % 2 == 0
-                ? messageBoxUser1(message: 'message1')
-                : messageBoxUser2(message: 'message2');
-          },
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: 20,
+              itemBuilder: (context, index) {
+                return index % 2 == 0
+                    ? messageBoxUser1(message: 'message1')
+                    : messageBoxUser2(message: 'message2');
+              },
+            ),
+          ),
+          TextField(
+            decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(22),
+                  borderSide: BorderSide(
+                    width: 2,
+                    color: Colors.black,
+                  )),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                width: 2,
+                color: Colors.black,
+              )),
+            ),
+          ),
+        ],
       ),
     );
   }
