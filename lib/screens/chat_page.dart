@@ -46,8 +46,9 @@ class chatPage extends StatelessWidget {
             child: TextField(
               decoration: InputDecoration(
                 suffixIcon: Icon(
+                  size: 30,
                   Icons.send,
-                  color: Colors.amber,
+                  color: const Color(0xFF0B6960),
                 ),
                 border: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
