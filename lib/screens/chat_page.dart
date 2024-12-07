@@ -7,6 +7,8 @@ import 'package:k/widgets/message_box.dart';
 
 class chatPage extends StatelessWidget {
   static String id = 'chatPage';
+  CollectionReference message =
+      FirebaseFirestore.instance.collection('messages');
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -48,11 +50,10 @@ class chatPage extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: TextField(
               onSubmitted: (value) {
-                CollectionReference message =
-                    FirebaseFirestore.instance.collection('messages');
-                addMessage(message, value);
+                addMessage(value);
               },
               decoration: InputDecoration(
+                hintText: 'Send Message',
                 suffixIcon: Icon(
                   size: 30,
                   Icons.send,
@@ -79,7 +80,7 @@ class chatPage extends StatelessWidget {
     );
   }
 
-  Future<void> addMessage(CollectionReference message, String value) {
+  Future<void> addMessage(String value) {
     return message
         .add({'message': value})
         .then((value) => log('thennn'))
