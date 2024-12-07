@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
 import 'package:k/widgets/message_box.dart';
@@ -44,6 +47,11 @@ class chatPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: TextField(
+              onSubmitted: (value) {
+                CollectionReference message =
+                    FirebaseFirestore.instance.collection('messages');
+                addMessage(message, value);
+              },
               decoration: InputDecoration(
                 suffixIcon: Icon(
                   size: 30,
@@ -69,5 +77,12 @@ class chatPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> addMessage(CollectionReference message, String value) {
+    return message
+        .add({'message': value})
+        .then((value) => log('thennn'))
+        .catchError((error) => log("Failed to add user: $error"));
   }
 }
