@@ -44,7 +44,7 @@ class chatPage extends StatelessWidget {
       body: Column(
         children: [
           StreamBuilder<QuerySnapshot>(
-            stream: _messageStream,
+            stream: message.orderBy('date', descending: true).snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
@@ -121,7 +121,7 @@ class chatPage extends StatelessWidget {
 
   Future<void> addMessage(String value) {
     return message
-        .add({'message': value})
+        .add({'message': value, 'date': DateTime.now()})
         .then((value) => log('thennn'))
         .catchError((error) => log("Failed to add user: $error"));
   }
