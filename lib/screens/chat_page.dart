@@ -43,8 +43,8 @@ class chatPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          FutureBuilder<QuerySnapshot>(
-            future: message.get(),
+          StreamBuilder<QuerySnapshot>(
+            stream: _messageStream,
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
