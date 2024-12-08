@@ -42,8 +42,8 @@ class chatPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          StreamBuilder(
-            stream: _messageStream,
+          FutureBuilder<QuerySnapshot>(
+            future: message.get(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
@@ -53,15 +53,18 @@ class chatPage extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 log('Wating');
                 return Text('data');
-              } else {
-                return ListView(
-                  children:
-                      snapshot.data!.docs.map((DocumentSnapshot document) {
-                    Map<String, dynamic> data =
-                        document.data()! as Map<String, dynamic>;
-                    return Text(data['message']);
-                  }).toList(),
+              } else if (snapshot.hasData) {
+                log(snapshot.data!.docs[1]['message']);
+                // return Text('snapshot');
+                return ListView.builder(
+                  itemCount: 4,
+                  itemBuilder: (context, index) {
+                    return messageBoxUser1(
+                        message: snapshot.data!.docs[index]['message']);
+                  },
                 );
+              } else {
+                return Text('saaaaaaa');
               }
             },
           ),
