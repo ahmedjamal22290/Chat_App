@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
+import 'package:k/model/message_model.dart';
 import 'package:k/widgets/message_box.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -54,14 +55,22 @@ class chatPage extends StatelessWidget {
                 log('Wating');
                 return Text('data');
               } else if (snapshot.hasData) {
+                List<messageModel> messageList = [];
+                for (int i = 0; i < snapshot.data!.docs.length; i++) {
+                  messageList
+                      .add(messageModel.fromJson(snapshot.data!.docs[i]));
+                }
                 log(snapshot.data!.docs[1]['message']);
                 // return Text('snapshot');
-                return ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return messageBoxUser1(
-                        message: snapshot.data!.docs[index]['message']);
-                  },
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: messageList.length,
+                    itemBuilder: (context, index) {
+                      return index % 2 == 0
+                          ? messageBoxUser1(message: messageList[index].text)
+                          : messageBoxUser2(message: messageList[index].text);
+                    },
+                  ),
                 );
               } else {
                 return Text('saaaaaaa');
