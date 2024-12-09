@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
 import 'package:k/model/message_model.dart';
@@ -14,7 +15,7 @@ class chatPage extends StatelessWidget {
 
   final Stream<QuerySnapshot> _messageStream =
       FirebaseFirestore.instance.collection(kMessagesCollection).snapshots();
-
+  final ScrollController _scrollController = ScrollController();
   TextEditingController _controller = TextEditingController();
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +65,7 @@ class chatPage extends StatelessWidget {
                 // return Text('snapshot');
                 return Expanded(
                   child: ListView.builder(
+                    controller: _scrollController,
                     itemCount: messageList.length,
                     itemBuilder: (context, index) {
                       return index % 2 == 0
@@ -83,6 +85,10 @@ class chatPage extends StatelessWidget {
               controller: _controller,
               onSubmitted: (value) {
                 addMessage(value);
+                _scrollController.animateTo(
+                    _scrollController.position.maxScrollExtent + 200,
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.fastOutSlowIn);
                 _controller.clear();
               },
               decoration: InputDecoration(
@@ -90,6 +96,10 @@ class chatPage extends StatelessWidget {
                 suffixIcon: GestureDetector(
                   onTap: () {
                     addMessage(_controller.text);
+                    _scrollController.animateTo(
+                        _scrollController.position.maxScrollExtent + 200,
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.fastOutSlowIn);
                     _controller.clear();
                   },
                   child: Icon(
