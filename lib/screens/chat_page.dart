@@ -45,7 +45,7 @@ class chatPage extends StatelessWidget {
       body: Column(
         children: [
           StreamBuilder<QuerySnapshot>(
-            stream: message.orderBy('date', descending: true).snapshots(),
+            stream: message.orderBy('date', descending: false).snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
@@ -65,6 +65,7 @@ class chatPage extends StatelessWidget {
                 // return Text('snapshot');
                 return Expanded(
                   child: ListView.builder(
+                    reverse: true,
                     controller: _scrollController,
                     itemCount: messageList.length,
                     itemBuilder: (context, index) {
@@ -85,8 +86,7 @@ class chatPage extends StatelessWidget {
               controller: _controller,
               onSubmitted: (value) {
                 addMessage(value);
-                _scrollController.animateTo(
-                    _scrollController.position.maxScrollExtent + 200,
+                _scrollController.animateTo(0,
                     duration: Duration(milliseconds: 500),
                     curve: Curves.fastOutSlowIn);
                 _controller.clear();
@@ -96,8 +96,7 @@ class chatPage extends StatelessWidget {
                 suffixIcon: GestureDetector(
                   onTap: () {
                     addMessage(_controller.text);
-                    _scrollController.animateTo(
-                        _scrollController.position.maxScrollExtent + 200,
+                    _scrollController.animateTo(0,
                         duration: Duration(milliseconds: 500),
                         curve: Curves.fastOutSlowIn);
                     _controller.clear();
