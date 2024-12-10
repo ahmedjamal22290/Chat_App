@@ -78,6 +78,7 @@ class chatPage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       if (email.toString() == messageList[index].email) {
                         return messageBoxUser1(
+                          time: messageList[index].time.toDate(),
                           message: messageList[index].text,
                         );
                       } else {

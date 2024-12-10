@@ -33,8 +33,9 @@ class messageBoxUser2 extends StatelessWidget {
 }
 
 class messageBoxUser1 extends StatelessWidget {
-  messageBoxUser1({super.key, required this.message});
+  messageBoxUser1({super.key, required this.message, required this.time});
   String message;
+  DateTime time;
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
@@ -51,11 +52,20 @@ class messageBoxUser1 extends StatelessWidget {
               topLeft: Radius.circular(12)),
           color: kChatFirstColor,
         ),
-        child: Center(
-          child: Text(
-            message,
-            style: TextStyle(fontSize: 25, color: Colors.white),
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Text(
+                message,
+                style: TextStyle(fontSize: 25, color: Colors.white),
+              ),
+            ),
+            Text(
+              '${time.hour.toString()}:${time.minute.toString()}',
+              style: TextStyle(color: const Color.fromARGB(181, 0, 0, 0)),
+            ),
+          ],
         ),
       ),
     );
