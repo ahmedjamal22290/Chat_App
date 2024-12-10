@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
@@ -54,7 +55,12 @@ class chatPage extends StatelessWidget {
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
                 log('Wating');
-                return Text('data');
+                return Padding(
+                  padding: const EdgeInsets.all(120.0),
+                  child: CupertinoActivityIndicator(
+                    radius: 20,
+                  ),
+                );
               } else if (snapshot.hasData) {
                 List<messageModel> messageList = [];
                 for (int i = 0; i < snapshot.data!.docs.length; i++) {
@@ -76,7 +82,7 @@ class chatPage extends StatelessWidget {
                   ),
                 );
               } else {
-                return Text('saaaaaaa');
+                return Text('data');
               }
             },
           ),
