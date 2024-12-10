@@ -1,11 +1,9 @@
-import 'package:k/constants.dart';
-
 class messageModel {
   final String text;
-
-  messageModel({required this.text});
+  final String email;
+  messageModel({required this.text, required this.email});
 
   factory messageModel.fromJson(jsonData) {
-    return messageModel(text: jsonData['message']);
+    return messageModel(text: jsonData['message'], email: jsonData['id']);
   }
 }

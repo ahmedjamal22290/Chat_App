@@ -100,7 +100,7 @@ class _loginPageState extends State<loginPage> {
                   try {
                     await loginUser();
                     showSnackMessage(context, 'Success');
-                    Navigator.pushNamed(context, chatPage.id);
+                    Navigator.pushNamed(context, chatPage.id, arguments: email);
                   } on FirebaseAuthException catch (e) {
                     showSnackMessage(context, e.code);
                   } catch (ex) {

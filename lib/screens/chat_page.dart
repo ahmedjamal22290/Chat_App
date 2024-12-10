@@ -11,7 +11,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class chatPage extends StatelessWidget {
   static String id = 'chatPage';
-
+  late var email;
   CollectionReference message =
       FirebaseFirestore.instance.collection(kMessagesCollection);
 
@@ -20,7 +20,7 @@ class chatPage extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
   TextEditingController _controller = TextEditingController();
   Widget build(BuildContext context) {
-    String email = ModalRoute.of(context)!.settings.arguments as String;
+    email = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -48,7 +48,7 @@ class chatPage extends StatelessWidget {
       body: Column(
         children: [
           StreamBuilder<QuerySnapshot>(
-            stream: message.orderBy('date', descending: false).snapshots(),
+            stream: message.orderBy('date', descending: true).snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
@@ -76,9 +76,15 @@ class chatPage extends StatelessWidget {
                     controller: _scrollController,
                     itemCount: messageList.length,
                     itemBuilder: (context, index) {
-                      return index % 2 == 0
-                          ? messageBoxUser1(message: messageList[index].text)
-                          : messageBoxUser2(message: messageList[index].text);
+                      if (email.toString() == messageList[index].email) {
+                        return messageBoxUser1(
+                          message: messageList[index].text,
+                        );
+                      } else {
+                        return messageBoxUser2(
+                          message: messageList[index].text,
+                        );
+                      }
                     },
                   ),
                 );
@@ -137,8 +143,12 @@ class chatPage extends StatelessWidget {
 
   Future<void> addMessage(String value) {
     return message
-        .add({'message': value, 'date': DateTime.now(), 'id': email})
-        .then((value) => log('thennn'))
-        .catchError((error) => log("Failed to add user: $error"));
+        .add({
+          'message': value,
+          'date': DateTime.now(),
+          'id': email,
+        })
+        .then((value) => log('then'))
+        .catchError((error) => log("Failed to add message: $error"));
   }
 }
