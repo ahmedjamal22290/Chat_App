@@ -83,6 +83,7 @@ class chatPage extends StatelessWidget {
                         );
                       } else {
                         return messageBoxUser2(
+                          time: messageList[index].time.toDate(),
                           message: messageList[index].text,
                         );
                       }

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:k/constants.dart';
 
 class messageBoxUser2 extends StatelessWidget {
-  messageBoxUser2({super.key, required this.message});
+  messageBoxUser2({super.key, required this.message, required this.time});
   String message;
+  DateTime time;
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
@@ -20,12 +21,21 @@ class messageBoxUser2 extends StatelessWidget {
               topLeft: Radius.circular(12)),
           color: kChatSecondColor,
         ),
-        child: Center(
-          child: Text(
-            textAlign: TextAlign.start,
-            message,
-            style: TextStyle(fontSize: 25, color: Colors.white),
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Center(
+              child: Text(
+                textAlign: TextAlign.start,
+                message,
+                style: TextStyle(fontSize: 25, color: Colors.white),
+              ),
+            ),
+            Text(
+              '${time.hour.toString()}:${time.minute.toString()}',
+              style: TextStyle(color: const Color.fromARGB(181, 0, 0, 0)),
+            ),
+          ],
         ),
       ),
     );
