@@ -53,8 +53,25 @@ class messageBoxUser1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onDoubleTap: () async {
-        await deleteUser(id);
+      onLongPress: () async {
+        showMenu(
+            elevation: 150,
+            context: context,
+            position: RelativeRect.fromLTRB(150, 650, 150, 150),
+            items: [
+              PopupMenuItem(
+                value: "delete",
+                child: Text('Delete'),
+              ),
+              PopupMenuItem(
+                value: "Cancle",
+                child: Text('Cancle'),
+              ),
+            ]).then((onValue) async {
+          if (onValue == 'delete') {
+            await deleteUser(id);
+          }
+        });
       },
       child: ConstrainedBox(
         constraints: BoxConstraints(
