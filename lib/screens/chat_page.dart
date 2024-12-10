@@ -80,6 +80,7 @@ class chatPage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       if (email.toString() == messageList[index].email) {
                         return messageBoxUser1(
+                          id: messageList[index].id!,
                           time: messageList[index].time.toDate(),
                           message: messageList[index].text,
                         );
@@ -154,14 +155,5 @@ class chatPage extends StatelessWidget {
         })
         .then((value) => log('then'))
         .catchError((error) => log("Failed to add message: $error"));
-  }
-
-  Future<void> deleteUser() {
-    FirebaseFirestore.instance.collection(kMessagesCollection).doc().get();
-    return message
-        .doc('ABC123')
-        .delete()
-        .then((value) => print("User Deleted"))
-        .catchError((error) => print("Failed to delete user: $error"));
   }
 }

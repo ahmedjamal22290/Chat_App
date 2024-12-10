@@ -4,7 +4,9 @@ class messageModel {
   final String text;
   final String email;
   final Timestamp time;
-  messageModel({required this.text, required this.email, required this.time});
+  String? id;
+  messageModel(
+      {required this.text, required this.email, required this.time, this.id});
 
   factory messageModel.fromJson(jsonData) {
     return messageModel(
