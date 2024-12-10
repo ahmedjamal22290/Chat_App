@@ -68,6 +68,8 @@ class chatPage extends StatelessWidget {
                 for (int i = 0; i < snapshot.data!.docs.length; i++) {
                   messageList
                       .add(messageModel.fromJson(snapshot.data!.docs[i]));
+                  messageList[messageList.length - 1].id =
+                      snapshot.data!.docs[i].id;
                 }
                 // return Text('snapshot');
                 return Expanded(
@@ -152,5 +154,14 @@ class chatPage extends StatelessWidget {
         })
         .then((value) => log('then'))
         .catchError((error) => log("Failed to add message: $error"));
+  }
+
+  Future<void> deleteUser() {
+    FirebaseFirestore.instance.collection(kMessagesCollection).doc().get();
+    return message
+        .doc('ABC123')
+        .delete()
+        .then((value) => print("User Deleted"))
+        .catchError((error) => print("Failed to delete user: $error"));
   }
 }
