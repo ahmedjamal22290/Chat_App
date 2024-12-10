@@ -10,7 +10,6 @@ import 'package:k/widgets/message_box.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class chatPage extends StatelessWidget {
-  chatPage({required this.email});
   static String id = 'chatPage';
 
   CollectionReference message =
@@ -21,6 +20,7 @@ class chatPage extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
   TextEditingController _controller = TextEditingController();
   Widget build(BuildContext context) {
+    String email = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
