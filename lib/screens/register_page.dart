@@ -116,7 +116,7 @@ class _registerPageState extends State<registerPage> {
                   try {
                     await createUser();
                     showSnackMessage(context, 'success');
-                    Navigator.pushNamed(context, 'chatPage');
+                    Navigator.pushNamed(context, 'chatPage', arguments: email);
                   } on FirebaseAuthException catch (e) {
                     showSnackMessage(context, e.code);
                   } catch (ex) {

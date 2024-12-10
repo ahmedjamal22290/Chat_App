@@ -10,7 +10,9 @@ import 'package:k/widgets/message_box.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class chatPage extends StatelessWidget {
+  chatPage({required this.email});
   static String id = 'chatPage';
+
   CollectionReference message =
       FirebaseFirestore.instance.collection(kMessagesCollection);
 
@@ -67,7 +69,6 @@ class chatPage extends StatelessWidget {
                   messageList
                       .add(messageModel.fromJson(snapshot.data!.docs[i]));
                 }
-                log(snapshot.data!.docs[1]['message']);
                 // return Text('snapshot');
                 return Expanded(
                   child: ListView.builder(
@@ -136,7 +137,7 @@ class chatPage extends StatelessWidget {
 
   Future<void> addMessage(String value) {
     return message
-        .add({'message': value, 'date': DateTime.now()})
+        .add({'message': value, 'date': DateTime.now(), 'id': email})
         .then((value) => log('thennn'))
         .catchError((error) => log("Failed to add user: $error"));
   }
