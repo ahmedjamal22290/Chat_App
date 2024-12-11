@@ -28,13 +28,17 @@ class _chatPageState extends State<chatPage>
 
   final Stream<QuerySnapshot> _messageStream =
       FirebaseFirestore.instance.collection(kMessagesCollection).snapshots();
-
   final ScrollController _scrollController = ScrollController();
-
   TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1500));
+    _animatePos = Tween<Offset>(
+      begin: Offset(-21, 0),
+      end: Offset(21, 0),
+    ).animate(_animationController);
     super.initState();
   }
 
@@ -46,18 +50,23 @@ class _chatPageState extends State<chatPage>
         automaticallyImplyLeading: false,
         centerTitle: true,
         actions: [
-          Container(
-            margin: EdgeInsets.only(right: 20),
-            width: 80,
-            height: 32,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(22),
-              color: Colors.black54,
-            ),
-            child: Transform.translate(
-              offset: Offset(-21, 0),
-              child: GestureDetector(
-                onTap: () {},
+          GestureDetector(
+            onTap: () {
+              _animationController.forward();
+            },
+            onDoubleTap: () {
+              _animationController.reverse();
+            },
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              width: 80,
+              height: 32,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(22),
+                color: Colors.black54,
+              ),
+              child: Transform.translate(
+                offset: _animatePos.value,
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
