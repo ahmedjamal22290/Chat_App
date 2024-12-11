@@ -9,16 +9,36 @@ import 'package:k/model/message_model.dart';
 import 'package:k/widgets/message_box.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class chatPage extends StatelessWidget {
+class chatPage extends StatefulWidget {
   static String id = 'chatPage';
+
+  @override
+  State<chatPage> createState() => _chatPageState();
+}
+
+class _chatPageState extends State<chatPage>
+    with SingleTickerProviderStateMixin {
   late var email;
+
   CollectionReference message =
       FirebaseFirestore.instance.collection(kMessagesCollection);
 
+  late AnimationController _animationController;
+  late Animation<Offset> _animatePos;
+
   final Stream<QuerySnapshot> _messageStream =
       FirebaseFirestore.instance.collection(kMessagesCollection).snapshots();
+
   final ScrollController _scrollController = ScrollController();
+
   TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     email = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
@@ -36,12 +56,15 @@ class chatPage extends StatelessWidget {
             ),
             child: Transform.translate(
               offset: Offset(-21, 0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
+              child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Container(),
                 ),
-                child: Container(),
               ),
             ),
           )
