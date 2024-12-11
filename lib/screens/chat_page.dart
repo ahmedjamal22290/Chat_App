@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k/constants.dart';
+import 'package:k/cubit/dark_mode_cubit/dark_mode_cubit.dart';
 import 'package:k/model/message_model.dart';
 import 'package:k/widgets/message_box.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -30,7 +32,6 @@ class _chatPageState extends State<chatPage>
       FirebaseFirestore.instance.collection(kMessagesCollection).snapshots();
   final ScrollController _scrollController = ScrollController();
   TextEditingController _controller = TextEditingController();
-
   @override
   void initState() {
     _animationController =
@@ -39,7 +40,6 @@ class _chatPageState extends State<chatPage>
       begin: Offset(-21, 0),
       end: Offset(21, 0),
     ).animate(_animationController);
-
     super.initState();
   }
 
@@ -53,10 +53,14 @@ class _chatPageState extends State<chatPage>
         actions: [
           GestureDetector(
             onTap: () {
-              _animationController.forward();
-            },
-            onDoubleTap: () {
-              _animationController.reverse();
+              if (BlocProvider.of<modeCubit>(context).dark) {
+                _animationController.reverse();
+                BlocProvider.of<modeCubit>(context).dark = false;
+              } else {
+                _animationController.forward();
+                BlocProvider.of<modeCubit>(context).dark = true;
+              }
+              BlocProvider.of<modeCubit>(context).darkMode();
             },
             child: Container(
               margin: EdgeInsets.only(right: 20),
