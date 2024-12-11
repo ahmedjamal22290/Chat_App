@@ -39,6 +39,7 @@ class _chatPageState extends State<chatPage>
       begin: Offset(-21, 0),
       end: Offset(21, 0),
     ).animate(_animationController);
+
     super.initState();
   }
 
@@ -75,7 +76,9 @@ class _chatPageState extends State<chatPage>
                         color: Colors.white,
                         shape: BoxShape.circle,
                       ),
-                      child: Container(),
+                      child: Container(
+                        child: Icon(Icons.dark_mode),
+                      ),
                     ),
                   );
                 },
