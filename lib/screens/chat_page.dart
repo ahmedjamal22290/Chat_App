@@ -34,7 +34,16 @@ class chatPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(22),
               color: Colors.black54,
             ),
-            child: Text('data'),
+            child: Transform.translate(
+              offset: Offset(-21, 0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                child: Container(),
+              ),
+            ),
           )
         ],
         title: Row(
