@@ -35,7 +35,7 @@ class _chatPageState extends State<chatPage>
   @override
   void initState() {
     _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 250));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 150));
     _animatePos = Tween<Offset>(
       begin: Offset(-21, 0),
       end: Offset(21, 0),
@@ -81,7 +81,12 @@ class _chatPageState extends State<chatPage>
                         shape: BoxShape.circle,
                       ),
                       child: Container(
-                        child: Icon(Icons.dark_mode),
+                        child: Icon(
+                          !BlocProvider.of<modeCubit>(context).dark
+                              ? Icons.dark_mode
+                              : Icons.sunny,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   );
@@ -113,7 +118,9 @@ class _chatPageState extends State<chatPage>
             Spacer()
           ],
         ),
-        backgroundColor: kPrimaryColor,
+        backgroundColor: BlocProvider.of<modeCubit>(context).dark
+            ? const Color.fromARGB(255, 10, 65, 60)
+            : kPrimaryColor,
       ),
       body: Column(
         children: [
