@@ -33,8 +33,8 @@ class _chatPageState extends State<chatPage>
 
   @override
   void initState() {
-    _animationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1500));
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 250));
     _animatePos = Tween<Offset>(
       begin: Offset(-21, 0),
       end: Offset(21, 0),
@@ -65,15 +65,21 @@ class _chatPageState extends State<chatPage>
                 borderRadius: BorderRadius.circular(22),
                 color: Colors.black54,
               ),
-              child: Transform.translate(
-                offset: _animatePos.value,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Container(),
-                ),
+              child: AnimatedBuilder(
+                animation: _animatePos,
+                builder: (context, child) {
+                  return Transform.translate(
+                    offset: _animatePos.value,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Container(),
+                    ),
+                  );
+                },
+                child: Container(),
               ),
             ),
           )
