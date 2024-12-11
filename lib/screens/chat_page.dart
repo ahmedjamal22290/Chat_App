@@ -25,9 +25,24 @@ class chatPage extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 20),
+            width: 80,
+            height: 32,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(22),
+              color: Colors.black54,
+            ),
+            child: Text('data'),
+          )
+        ],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Spacer(
+              flex: 3,
+            ),
             Image(
               image: AssetImage('assets/images/scholar.png'),
               height: 60,
@@ -41,6 +56,7 @@ class chatPage extends StatelessWidget {
                 fontFamily: 'pacifico',
               ),
             ),
+            Spacer()
           ],
         ),
         backgroundColor: kPrimaryColor,
