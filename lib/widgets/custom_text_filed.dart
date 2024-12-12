@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 
 class customTextFromField extends StatelessWidget {
   customTextFromField(
-      {super.key, required this.onChanged, required this.labelText});
+      {super.key,
+      required this.onChanged,
+      required this.labelText,
+      this.scure});
   String? labelText;
+  bool? scure = false;
   Function(String) onChanged;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: scure ?? false,
       validator: (data) {
         if (data == null || data.isEmpty) {
           return "field is empty";

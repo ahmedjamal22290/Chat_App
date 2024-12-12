@@ -25,7 +25,7 @@ class customBotton extends StatelessWidget {
               child: Text(
             title,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 25,
               fontFamily: 'Pacifico',
             ),

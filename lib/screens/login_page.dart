@@ -24,6 +24,7 @@ class _loginPageState extends State<loginPage> {
   GlobalKey<FormState> formKey = GlobalKey();
 
   bool isLoading = false;
+  bool scure = true;
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
@@ -86,6 +87,7 @@ class _loginPageState extends State<loginPage> {
                         password = value;
                       },
                       labelText: 'Password',
+                      scure: scure,
                     ),
                   ],
                 ),
