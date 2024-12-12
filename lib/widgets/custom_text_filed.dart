@@ -5,9 +5,13 @@ class customTextFromField extends StatelessWidget {
       {super.key,
       required this.onChanged,
       required this.labelText,
-      this.scure});
+      this.scure,
+      this.SuffixIcon = false,
+      this.onTap});
   String? labelText;
   bool? scure = false;
+  bool SuffixIcon;
+  VoidCallback? onTap;
   Function(String) onChanged;
   @override
   Widget build(BuildContext context) {
@@ -20,6 +24,15 @@ class customTextFromField extends StatelessWidget {
       },
       onChanged: onChanged,
       decoration: InputDecoration(
+        suffixIcon: SuffixIcon
+            ? GestureDetector(
+                onTap: onTap ?? () {},
+                child: Icon(
+                  Icons.remove_red_eye,
+                  size: 23,
+                ),
+              )
+            : Container(),
         errorStyle: TextStyle(
             color: const Color.fromARGB(255, 156, 11, 0),
             fontWeight: FontWeight.bold),

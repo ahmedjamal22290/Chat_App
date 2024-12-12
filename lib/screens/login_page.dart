@@ -88,6 +88,11 @@ class _loginPageState extends State<loginPage> {
                       },
                       labelText: 'Password',
                       scure: scure,
+                      SuffixIcon: true,
+                      onTap: () {
+                        scure = scure ? false : true;
+                        setState(() {});
+                      },
                     ),
                   ],
                 ),
