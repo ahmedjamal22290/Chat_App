@@ -32,7 +32,7 @@ class customTextFromField extends StatelessWidget {
                   size: 23,
                 ),
               )
-            : Container(),
+            : null,
         errorStyle: TextStyle(
             color: const Color.fromARGB(255, 156, 11, 0),
             fontWeight: FontWeight.bold),

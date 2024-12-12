@@ -21,7 +21,7 @@ class _registerPageState extends State<registerPage> {
   GlobalKey<FormState> fromKey = GlobalKey();
 
   bool isLoading = false;
-
+  bool scure = false;
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
@@ -102,6 +102,12 @@ class _registerPageState extends State<registerPage> {
                         password = value;
                       },
                       labelText: 'Password',
+                      scure: scure,
+                      SuffixIcon: true,
+                      onTap: () {
+                        scure = scure ? false : true;
+                        setState(() {});
+                      },
                     ),
                   ],
                 ),
