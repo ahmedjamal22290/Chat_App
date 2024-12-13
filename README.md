@@ -1,7 +1,12 @@
 # k
 
-A new Flutter project.
-
+Scholar Chat.
+## Accounts to login
+  Email:ahmedelrozany@gmail.com 
+  Password:123456
+  Email:ahmedelebide@gmail.com 
+  Password:123456
+  
 ## Getting Started
 
 This project is a starting point for a Flutter application.
