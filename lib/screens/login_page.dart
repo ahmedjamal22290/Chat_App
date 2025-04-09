@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:k/blocs/auth_bloc/auth_bloc.dart';
 import 'package:k/constants.dart';
-import 'package:k/cubit/login_cubit/authentication_cubit.dart';
-import 'package:k/cubit/login_cubit/authentication_state.dart';
 import 'package:k/helper/show_snack_message.dart';
 import 'package:k/screens/chat_page.dart';
 import 'package:k/screens/register_page.dart';
@@ -25,15 +24,15 @@ class LoginPage extends StatelessWidget {
   bool scure = true;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthenticationCubit, AuthenticationState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthenticationLoading) {
+        if (state is LoginLoading) {
           isLoading = true;
-        } else if (state is AuthenticationSucess) {
+        } else if (state is LoginSucess) {
           showSnackMessage(context, 'Success');
           isLoading = false;
           Navigator.pushNamed(context, ChatPage.id, arguments: email);
-        } else if (state is AuthenticationFailure) {
+        } else if (state is LoginFailure) {
           isLoading = false;
           showSnackMessage(context, state.errorMessage);
         }
@@ -111,10 +110,8 @@ class LoginPage extends StatelessWidget {
               CustomBotton(
                 onTap: () async {
                   if (formKey.currentState!.validate()) {
-                    BlocProvider.of<AuthenticationCubit>(context).loginUser(
-                      email: email!,
-                      password: password!,
-                    );
+                    BlocProvider.of<AuthBloc>(context)
+                        .add(LoginEvent(email: email!, password: password!));
 
                     isLoading = false;
                   } else {}

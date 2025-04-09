@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:k/blocs/auth_bloc/auth_bloc.dart';
 import 'package:k/constants.dart';
-import 'package:k/cubit/login_cubit/authentication_cubit.dart';
-import 'package:k/cubit/login_cubit/authentication_state.dart';
 import 'package:k/helper/show_snack_message.dart';
 import 'package:k/widgets/custom_botton.dart';
 import 'package:k/widgets/custom_text_filed.dart';
@@ -20,15 +19,15 @@ class RegisterPage extends StatelessWidget {
   bool scure = false;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthenticationCubit, AuthenticationState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthenticationSucess) {
+        if (state is RegisterSucess) {
           showSnackMessage(context, 'success');
           Navigator.pushNamed(context, 'chatPage', arguments: email);
           isLoading = false;
-        } else if (state is AuthenticationLoading) {
+        } else if (state is RegisterLoading) {
           isLoading = true;
-        } else if (state is AuthenticationFailure) {
+        } else if (state is RegisterFailure) {
           isLoading = false;
           showSnackMessage(context, state.errorMessage);
         }
@@ -125,8 +124,8 @@ class RegisterPage extends StatelessWidget {
                 CustomBotton(
                   onTap: () async {
                     if (fromKey.currentState!.validate()) {
-                      BlocProvider.of<AuthenticationCubit>(context)
-                          .createUser(email: email!, password: password!);
+                      BlocProvider.of<AuthBloc>(context).add(
+                          RegisterEvent(email: email!, password: password!));
                     } else {}
                   },
                   title: 'Register',

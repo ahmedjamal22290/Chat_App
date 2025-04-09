@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:k/blocs/auth_bloc/auth_bloc.dart';
 import 'package:k/cubit/chat_cubit/chat_cubit.dart';
 import 'package:k/cubit/dark_mode_cubit/dark_mode_cubit.dart';
 import 'package:k/cubit/login_cubit/authentication_cubit.dart';
@@ -9,12 +10,15 @@ import 'package:k/firebase_options.dart';
 import 'package:k/screens/chat_page.dart';
 import 'package:k/screens/login_page.dart';
 import 'package:k/screens/register_page.dart';
+import 'package:k/simple_bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Bloc.observer = SimpleBlocObserver();
+
   runApp(const ScholarChat());
 }
 
@@ -28,6 +32,7 @@ class ScholarChat extends StatelessWidget {
         BlocProvider(create: (contex) => ModeCubit()),
         BlocProvider(create: (contex) => AuthenticationCubit()),
         BlocProvider(create: (contex) => ChatCubit()),
+        BlocProvider(create: (contex) => AuthBloc()),
       ],
       child: BlocBuilder<ModeCubit, Modes>(
         builder: (context, state) {
