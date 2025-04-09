@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k/constants.dart';
+import 'package:k/cubit/login_cubit/authentication_cubit.dart';
+import 'package:k/cubit/login_cubit/authentication_state.dart';
 import 'package:k/helper/show_snack_message.dart';
 import 'package:k/screens/chat_page.dart';
 import 'package:k/screens/register_page.dart';
@@ -8,16 +11,11 @@ import 'package:k/widgets/custom_botton.dart';
 import 'package:k/widgets/custom_text_filed.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class loginPage extends StatefulWidget {
-  loginPage({super.key});
-  static String id = 'logInPage';
+class LoginPage extends StatelessWidget {
+  LoginPage({super.key});
 
-  @override
-  State<loginPage> createState() => _loginPageState();
-}
-
-class _loginPageState extends State<loginPage> {
   bool validtion = true;
+  static String id = 'logInPage';
 
   String? email, password;
 
@@ -27,110 +25,114 @@ class _loginPageState extends State<loginPage> {
   bool scure = true;
   @override
   Widget build(BuildContext context) {
-    return ModalProgressHUD(
-      inAsyncCall: isLoading,
-      child: Scaffold(
-        backgroundColor: kPrimaryColor,
-        body: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 80, top: 100),
-              child: Center(
-                child: Column(
-                  children: [
-                    Image.asset(
-                      'assets/images/scholar.png',
-                      scale: 0.6,
-                    ),
-                    Text(
-                      'Scholar Chat',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          wordSpacing: 4,
-                          fontSize: 30),
-                    )
-                  ],
+    return BlocConsumer<AuthenticationCubit, AuthenticationState>(
+      listener: (context, state) {
+        if (state is AuthenticationLoading) {
+          isLoading = true;
+        } else if (state is AuthenticationSucess) {
+          showSnackMessage(context, 'Success');
+          isLoading = false;
+          Navigator.pushNamed(context, ChatPage.id, arguments: email);
+        } else if (state is AuthenticationFailure) {
+          isLoading = false;
+          showSnackMessage(context, state.errorMessage);
+        }
+      },
+      builder: (context, state) => ModalProgressHUD(
+        inAsyncCall: isLoading,
+        child: Scaffold(
+          backgroundColor: kPrimaryColor,
+          body: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 80, top: 100),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/images/scholar.png',
+                        scale: 0.6,
+                      ),
+                      const Text(
+                        'Scholar Chat',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            wordSpacing: 4,
+                            fontSize: 30),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 5),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 15.0),
-                      child: Text(
-                        'Sign In',
-                        style: TextStyle(
-                          color: Colors.white,
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 25,
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0, right: 5),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 15.0),
+                        child: Text(
+                          'Sign In',
+                          style: TextStyle(
+                            color: Colors.white,
+                            // fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                          ),
                         ),
                       ),
-                    ),
-                    customTextFromField(
-                      onChanged: (value) {
-                        email = value;
-                      },
-                      labelText: 'Email',
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    customTextFromField(
-                      onChanged: (value) {
-                        password = value;
-                      },
-                      labelText: 'Password',
-                      scure: scure,
-                      SuffixIcon: true,
-                      onTap: () {
-                        scure = scure ? false : true;
-                        setState(() {});
-                      },
-                    ),
-                  ],
+                      CustomTextFromField(
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        labelText: 'Email',
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      CustomTextFromField(
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        labelText: 'Password',
+                        scure: scure,
+                        suffixIcon: true,
+                        onTap: () {
+                          scure = scure ? false : true;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            customBotton(
-              onTap: () async {
-                if (formKey.currentState!.validate()) {
-                  setState(() {
-                    isLoading = true;
-                  });
-                  try {
-                    await loginUser();
-                    showSnackMessage(context, 'Success');
-                    Navigator.pushNamed(context, chatPage.id, arguments: email);
-                  } on FirebaseAuthException catch (e) {
-                    showSnackMessage(context, e.code);
-                  } catch (ex) {
-                    showSnackMessage(context, 'There was an Error');
-                  }
-                  setState(() {
+              CustomBotton(
+                onTap: () async {
+                  if (formKey.currentState!.validate()) {
+                    BlocProvider.of<AuthenticationCubit>(context).loginUser(
+                      email: email!,
+                      password: password!,
+                    );
+
                     isLoading = false;
-                  });
-                } else {}
-              },
-              title: 'Sign In',
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "don't have an account ? ",
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
-                navigatToRegisterPage(context),
-              ],
-            )
-          ],
+                  } else {}
+                },
+                title: 'Sign In',
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "don't have an account ? ",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  navigatToRegisterPage(context),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -139,7 +141,7 @@ class _loginPageState extends State<loginPage> {
   GestureDetector navigatToRegisterPage(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, registerPage.id);
+        Navigator.pushNamed(context, RegisterPage.id);
       },
       child: const Text(
         "Register",
@@ -149,11 +151,5 @@ class _loginPageState extends State<loginPage> {
             fontSize: 16),
       ),
     );
-  }
-
-  Future<void> loginUser() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    UserCredential user = await auth.signInWithEmailAndPassword(
-        email: email ?? "empty", password: password ?? "empty");
   }
 }

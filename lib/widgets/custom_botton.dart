@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class customBotton extends StatelessWidget {
-  customBotton({
+class CustomBotton extends StatelessWidget {
+  const CustomBotton({
     required this.onTap,
     required this.title,
     super.key,
   });
-  VoidCallback onTap;
-  String title;
+  final VoidCallback onTap;
+  final String title;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,7 +24,7 @@ class customBotton extends StatelessWidget {
           child: Center(
               child: Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 25,
               fontFamily: 'Pacifico',

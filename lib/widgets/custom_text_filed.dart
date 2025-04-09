@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class customTextFromField extends StatelessWidget {
-  customTextFromField(
+class CustomTextFromField extends StatelessWidget {
+  const CustomTextFromField(
       {super.key,
       required this.onChanged,
       required this.labelText,
-      this.scure,
-      this.SuffixIcon = false,
+      this.scure = false,
+      this.suffixIcon = false,
       this.onTap});
-  String? labelText;
-  bool? scure = false;
-  bool SuffixIcon;
-  VoidCallback? onTap;
-  Function(String) onChanged;
+  final String? labelText;
+  final bool? scure;
+  final bool suffixIcon;
+  final VoidCallback? onTap;
+  final Function(String) onChanged;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -24,17 +24,17 @@ class customTextFromField extends StatelessWidget {
       },
       onChanged: onChanged,
       decoration: InputDecoration(
-        suffixIcon: SuffixIcon
+        suffixIcon: suffixIcon
             ? GestureDetector(
                 onTap: onTap ?? () {},
-                child: Icon(
+                child: const Icon(
                   Icons.remove_red_eye,
                   size: 23,
                 ),
               )
             : null,
-        errorStyle: TextStyle(
-            color: const Color.fromARGB(255, 156, 11, 0),
+        errorStyle: const TextStyle(
+            color: Color.fromARGB(255, 156, 11, 0),
             fontWeight: FontWeight.bold),
         errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
@@ -45,7 +45,7 @@ class customTextFromField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: const BorderSide(
-              color: const Color(0xFF1E3D73),
+              color: Color(0xFF1E3D73),
               width: 1.5,
             )),
         enabledBorder: const OutlineInputBorder(

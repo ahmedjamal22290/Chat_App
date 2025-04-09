@@ -1,5 +1,5 @@
-class modes {}
+class Modes {}
 
-class darkState extends modes {}
+class DarkState extends Modes {}
 
-class lightState extends modes {}
+class LightState extends Modes {}
